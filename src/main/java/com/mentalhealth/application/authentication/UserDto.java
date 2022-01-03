@@ -22,9 +22,23 @@ public class UserDto {
     @NotEmpty
     private String email;
 
+    @NotNull
+    @NotEmpty
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getFirstName() {
         return firstName;
     }
+
+
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;

@@ -18,6 +18,9 @@ public class User {
     @Column
     private String lastName;
 
+    @Column
+    private String role;
+
     private String password;
 
     public Long getId() {
@@ -26,6 +29,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

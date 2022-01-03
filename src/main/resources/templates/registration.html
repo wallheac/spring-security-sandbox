@@ -9,8 +9,17 @@
 <div>Registration</div>
 
 <h1>Register</h1>
-<form action="/registration" th:object="${user}" method="POST" enctype="utf8">
+<form action="/registration" th:object="${user}" method="POST">
     <table>
+        <tr>
+            <td>I am interested in:</td>
+            <td>
+                <select th:field="*{role}">
+                    <option th:value="CONSUMER" >finding a therapist</option>
+                    <option th:value="PROVIDER" >providing therapy services</option>
+                </select>
+            </td>
+        </tr>
     <tr>
         <td>First Name</td>
         <td><input th:field="*{firstName}"/></td>
