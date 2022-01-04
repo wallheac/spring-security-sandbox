@@ -1,5 +1,6 @@
 package com.mentalhealth.application;
 
+import com.mentalhealth.application.authentication.MentalHealthAuthenticationSuccessHandler;
 import com.mentalhealth.application.authentication.MentalHealthUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -25,13 +27,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/home", "/registration")
                 .permitAll()
-                .antMatchers("/welcome").hasAnyAuthority("PROVIDER")
+                .antMatchers("/provider/**").hasAnyAuthority("PROVIDER")
                 .and()
                 .formLogin()
               .loginPage("/login")
                 .permitAll()
                 .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/welcome", true)
+                .successHandler(mentalHealthSuccessHandler())
                 .failureUrl("/login.html?error=true")
                 .and()
                 .logout()
@@ -45,6 +47,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(mentalHealthUserDetailsService)
                 .passwordEncoder(new BCryptPasswordEncoder());
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler mentalHealthSuccessHandler(){
+        return new MentalHealthAuthenticationSuccessHandler();
     }
 
     @Bean
