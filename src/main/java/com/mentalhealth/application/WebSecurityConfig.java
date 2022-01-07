@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/home", "/registration")
                 .permitAll()
                 .antMatchers("/provider/**").hasAnyAuthority("PROVIDER")
+                .antMatchers("/consumer/**").hasAnyAuthority("CONSUMER")
                 .and()
                 .formLogin()
               .loginPage("/login")
